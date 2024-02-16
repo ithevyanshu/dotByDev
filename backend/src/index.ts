@@ -1,14 +1,20 @@
 import express from "express";
 import { User } from "./db";
 import bcrypt from "bcrypt";
+import "dotenv/config";
+import { createUser } from "./utils/validation";
+import { createAccessToken } from "./utils/token";
 
-const saltRounds = 10;
 const app = express();
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
   try {
     const user = req.body;
+    const parseInfo = createUser.safeParse(user);
+    if (!parseInfo.success) {
+      return res.status(400).json(parseInfo.error);
+    }
     const existingEmail = await User.findOne({ email: user.email });
     const existingUsername = await User.findOne({ username: user.username });
 
@@ -19,7 +25,10 @@ app.post("/signup", async (req, res) => {
       return res.status(400).json("Username already exists");
     }
 
-    const hashPassword = bcrypt.hashSync(user.password, saltRounds);
+    const hashPassword = bcrypt.hashSync(
+      user.password,
+      parseInt(process.env.SALT_ROUNDS || "10")
+    );
     user.password = hashPassword;
     await User.create(user);
 
@@ -39,28 +48,21 @@ app.post("/login", async (req, res) => {
       return res.status(400).json("Invalid credentials");
     }
 
-    const existingPassword = existingUser.password || "";
-
     const passwordMatch = await bcrypt.compare(
       password || "",
-      existingPassword
+      existingUser.password || ""
     );
-
     if (!passwordMatch) {
       return res.status(400).json("Invalid credentials");
     }
+    delete existingUser.password;
 
-    res.send("User logged in successfully");
+    const accessToken = createAccessToken({ id: existingUser._id });
+    res.send("User logged in successfully\n" + accessToken);
   } catch (error) {
     console.error("Error in login:", error);
     res.status(500).json({ msg: "Internal Server Error" });
   }
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+app.listen(process.env.PORT);

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://localhost:27017/dotByDev");
+mongoose.connect(process.env.MongoURL || "mongodb://localhost:27017/dotByDev");
 
 const userSchema = new mongoose.Schema({
   username: String,
