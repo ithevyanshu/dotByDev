@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-mongoose.connect(process.env.MongoURL || "mongodb://localhost:27017/dotByDev");
-
 const userSchema = new mongoose.Schema({
   username: String,
   firstName: String,
@@ -14,4 +12,4 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("Users", userSchema);
 
-export { User };
+export default User;
