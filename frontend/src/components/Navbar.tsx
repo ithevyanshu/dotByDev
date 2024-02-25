@@ -20,7 +20,7 @@ const Navbar = () => {
         <nav className="bg-gray-800">
             <div className="mx-auto px-2 sm:px-6 lg:px-8">
                 <div className="flex h-16 text-white items-center justify-between">
-                    <Link to="/" className="text-4xl font-bold hover:cursor-pointer">dotDEV</Link>
+                    <Link to="/" className="text-4xl font-bold hover:cursor-pointer">Todos</Link>
                     {isLoggedIn ? (
                         <div>
                             <button onClick={logout} className="bg-white text-gray-800 font-bold border-2 px-4 py-1 text-xl mx-2 hover:cursor-pointer">Log Out</button>

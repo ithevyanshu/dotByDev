@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useTitle from '../hooks/useTitle';
 
 const Signup = () => {
+  useTitle('Signup');
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -39,7 +41,7 @@ const Signup = () => {
   return (
     <div className="flex justify-center mt-20">
       <div className="px-2 py-1 text-center">
-        <h1 className="pb-2 mb-10 border-b-2 text-4xl font-bold">dotDEV</h1>
+        <h1 className="pb-2 mb-10 border-b-2 text-4xl font-bold">Todos</h1>
         <div className="text-xl flex flex-col">
           {error && <p className="text-red-500 text-base">*{error}</p>}
           <div>

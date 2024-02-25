@@ -4,8 +4,10 @@ import { useSetRecoilState } from "recoil";
 import { authState } from "../atom/authState";
 
 import axios from "axios";
+import useTitle from "../hooks/useTitle";
 
 const Login = () => {
+  useTitle("Login");
   const navigate = useNavigate();
   const setAuthState = useSetRecoilState(authState);
   const [formData, setFormData] = useState({
@@ -45,7 +47,7 @@ const Login = () => {
   return (
     <div className="flex justify-center mt-20">
       <div className="px-2 py-1 text-center">
-        <h1 className="pb-2 mb-10 border-b-2 text-4xl font-bold min-w-96">dotDEV</h1>
+        <h1 className="pb-2 mb-10 border-b-2 text-4xl font-bold min-w-96">Todos</h1>
         <div className="text-xl flex flex-col">
           {error && <p className="text-red-500 text-base">*{error}</p>}
           <input className="border-2 my-2 p-1" type="text" name="email" placeholder="Email" value={formData.email} onChange={handleInputChange} />

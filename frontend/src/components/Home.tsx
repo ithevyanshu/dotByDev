@@ -1,7 +1,12 @@
+import useTitle from "../hooks/useTitle"
+import Todos from "./Todos";
+
+
 const Home = () => {
+  useTitle("Dashboard");
   return (
     <>
-        <h1>Home</h1>
+        <Todos />
     </>
   )
 }
